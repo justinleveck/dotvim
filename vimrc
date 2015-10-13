@@ -42,7 +42,7 @@ set history=10000
 
 " Set the word wrap character limit, this will force word wrap past the
 " specified column.
-set textwidth=72
+" set textwidth=72
 
 " Set the visual color column. This is usually used to indicate the text wrap
 " boundaries.
@@ -231,8 +231,8 @@ augroup END
 " http://ethanschoonover.com/solarized
 " In order to have this work properly in iTerm2 you also need to setup the
 " iTerm2 solarized color scheme.
-set background=light
-colorscheme solarized
+set background=dark
+colorscheme spacegray
 
 " Tell it to use the ir_black color scheme
 " http://blog.toddwerth.com/entries/8
@@ -339,8 +339,12 @@ function! ShowRoutes()
 endfunction
 map <leader>gR :call ShowRoutes()<cr>
 map <leader>gg :topleft 100 :split Gemfile<cr>
-
+" let filename = expand("%:t:r")
+" let basefilename = system("echo '" . filename . "'" . " | sed -e 's/\_spec//g'")
 map <leader>b :call SelectaCommand("echo '" . GetBuffers() . "'", "", ":buffer")<cr>
+map <leader>d :call SelectaCommand("git diff --name-only master", "", ":e")<cr>
+map <leader>x :call SelectaCommand("find -path \| ag '" . Basefilename() . "'", "", ":e")<cr>
+map <leader>s :execute "find " . TestImplementationFilename()<cr>
 map <leader>gv :call SelectaCommand("find app/views -type f", "", ":e")<cr>
 map <leader>gm :call SelectaCommand("find app/models -type f", "", ":e")<cr>
 map <leader>gh :call SelectaCommand("find app/helpers -type f", "", ":e")<cr>
@@ -414,3 +418,26 @@ map <leader>w :call RunWipCucumberFeatures()<cr>
 
 " Ping the cursor like an old radar to find it fast
 nnoremap <leader>C :PingCursor<cr>
+
+set timeoutlen=1000 ttimeoutlen=0
+
+
+function! Strip(input_string)
+  return substitute(a:input_string, '^\s*\(.\{-}\)\s*$', '\1', '')
+endfunction
+
+function! Basefilename()
+  let filename = expand("%:t:r")
+  let basefilename = system("echo '" . filename . "'" . " | sed -e 's/\_spec//g'")
+  return basefilename
+endfunction
+
+function! TestImplementationFilename()
+  let filename = expand("%:t:r")
+  if filename =~ "spec"
+    let basefilename = system("echo '" . filename . "'" . " | sed -e 's/\_spec//g'")
+  else
+    let basefilename = filename . "_spec"
+  endif
+  return basefilename
+endfunction

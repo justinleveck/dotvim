@@ -19,9 +19,6 @@
 [submodule "bundle/vim-matchit"]
 	path = bundle/vim-matchit
 	url = git://github.com/vim-scripts/matchit.zip.git
-[submodule "bundle/gist-vim"]
-	path = bundle/gist-vim
-	url = git://github.com/mattn/gist-vim.git
 [submodule "bundle/webapi-vim"]
 	path = bundle/webapi-vim
 	url = git://github.com/mattn/webapi-vim.git

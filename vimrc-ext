@@ -1,0 +1,12 @@
+set textwidth=0
+inoremap <C-d> <Del>
+
+" Insert newline without entering insert mode
+nmap oo o<Esc>k
+
+" Display extra whitespace
+set list listchars=tab:»·,trail:·,nbsp:·
+
+" Make it obvious where 80 characters is
+" set textwidth=80
+" set colorcolumn=+1
